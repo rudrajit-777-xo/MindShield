@@ -2,6 +2,7 @@ import streamlit as st
 import datetime
 from modules.preprocessing import preprocess
 from modules.sentiment import get_sentiment
+from modules.distortion import detect_cbt_patterns
 st.set_page_config(layout="wide")
 
 # ---------------- SIDEBAR ----------------
@@ -72,6 +73,7 @@ if st.button("Save Entry"):
     else:
         clean = preprocess(text)
         sentiment, score = get_sentiment(text)
+        cbt_patterns = detect_cbt_patterns(clean)
         risk = fake_risk(clean)
 
         st.session_state.history[selected_date] = {
@@ -80,7 +82,13 @@ if st.button("Save Entry"):
         }
 
         st.success("✅ Entry saved!")
+        st.markdown("### 🧠 Thinking Patterns")
 
+        for item in cbt_patterns:
+            st.write(f"🔹 {item['pattern']}")
+            st.caption(item['description'])
+
+            
 # ---------------- MAIN DISPLAY ----------------
 if selected_date in st.session_state.history:
     entry = st.session_state.history[selected_date]
