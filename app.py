@@ -46,7 +46,7 @@ st.markdown("""
 }
 </style>
 
-<h1 class="title">🧠 MindShield AI</h1>
+<h1 class="title">MindShield AI</h1>
 """, unsafe_allow_html=True)
 
 text = st.text_area(
@@ -55,15 +55,7 @@ text = st.text_area(
     placeholder="How are you feeling today? What’s on your mind?"
 )
 
-# Dummy risk (for now, until ML is added)
-def fake_risk(text):
-    text = text.lower()
-    if "always" in text or "worst" in text:
-        return "High"
-    elif "stress" in text or "tired" in text:
-        return "Medium"
-    else:
-        return "Low"
+
 
 # ---------------- BUTTON ----------------
 if st.button("Save Entry"):
@@ -74,7 +66,12 @@ if st.button("Save Entry"):
         clean = preprocess(text)
         sentiment, score = get_sentiment(text)
         cbt_patterns = detect_cbt_patterns(clean)
-        risk = fake_risk(clean)
+        cbt_score = len(cbt_patterns)
+        #ML (FUTURE)
+        # 👉 Replace this later with:
+        # from modules.model import predict_risk
+        # risk = predict_risk([score, cbt_score])
+        risk = "Coming Soon"   # placeholder for now
 
         st.session_state.history[selected_date] = {
             "text": text,
@@ -82,13 +79,30 @@ if st.button("Save Entry"):
         }
 
         st.success("✅ Entry saved!")
+
+         # 🔥 SENTIMENT
+        st.markdown("### 😊 Sentiment")
+        if sentiment == "Positive":
+            st.success(f"Positive ({score:.2f})")
+        elif sentiment == "Negative":
+            st.error(f"Negative ({score:.2f})")
+        else:
+            st.info(f"Neutral ({score:.2f})")
+
+        # 🔥 CBT PATTERNS
         st.markdown("### 🧠 Thinking Patterns")
+        if cbt_patterns:
+            for item in cbt_patterns:
+                st.warning(f"{item['pattern']}")
+                st.caption(item['description'])
+        else:
+            st.success("Healthy thinking detected")
 
-        for item in cbt_patterns:
-            st.write(f"🔹 {item['pattern']}")
-            st.caption(item['description'])
+        # 🔥 RISK (ML PLACEHOLDER)
+        st.markdown("### ⚠️ Relapse Risk")
+        st.info("ML model will predict: Low / Medium / High")
 
-            
+
 # ---------------- MAIN DISPLAY ----------------
 if selected_date in st.session_state.history:
     entry = st.session_state.history[selected_date]
@@ -96,11 +110,4 @@ if selected_date in st.session_state.history:
     st.markdown("### 📖 Entry Confirmed")
     st.write(entry["text"])
 
-    st.markdown("### 📊 Risk Level")
-
-    if entry["risk"] == "High":
-        st.error("⚠️ High Risk")
-    elif entry["risk"] == "Medium":
-        st.warning("⚡ Medium Risk")
-    else:
-        st.success("✅ Low Risk")
+    
