@@ -33,10 +33,11 @@ The system combines **Natural Language Processing (NLP)** and **Machine Learning
 
 * Identifies negative thinking patterns such as:
 
-  * “This always happens” thinking
-  * Expecting worst outcomes
-  * Self-blame patterns
-  * All-or-nothing thinking
+  * Always thinking negative
+  * Expecting the worst
+  * Blaming yourself
+  * Assuming others think badly
+  * All or nothing thinking(Seeing things in extremes only — either 100% good or 100% bad)
 
 ### ⚠️ Relapse Risk Prediction
 
