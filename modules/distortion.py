@@ -14,7 +14,7 @@ def detect_cbt_patterns(text):
             "i keep failing", "same thing happens every time",
             "nothing changes", "i am stuck like this forever",
             "nobody loves me","i feel unloved","i feel hated",
-            "no one cares about me",  
+            "no one cares about me"  
         ],
         "description": "You feel like bad situations happen all the time."
     },
@@ -22,14 +22,14 @@ def detect_cbt_patterns(text):
     "Expecting the worst": {
         "keywords": [
             "worst", "disaster", "ruin", "everything is over",
-            "nothing is left", "it's finished", "it's all over",
+            "nothing is left", "it's finished", "its finished", "it's all over", "its all over",
             "there is no hope", "hopeless", "it will fail",
             "this will go wrong", "i know it will fail",
-            "something bad will happen", "it’s ruined",
-            "there’s no way this works",
+            "something bad will happen", "it’s ruined", "its ruined",
+            "there’s no way this works", "theres no way this works",
             "this is going to be terrible", "i am doomed",
             "it will end badly", "nothing good will happen",
-            "i can’t see any good outcome", "it’s going to fall apart",
+            "i can’t see any good outcome", "i cant see any good outcome", "it’s going to fall apart", "its going to fall apart",
             "everything will collapse", "i expect the worst",
             "this will turn into a disaster"
         ],
@@ -39,12 +39,12 @@ def detect_cbt_patterns(text):
     "Blaming yourself": {
         "keywords": [
             "my fault", "because of me", "i am the reason",
-            "i caused this", "it's all on me", "i messed up",
+            "i caused this", "it's all on me", "its all on me", "i messed up",
             "i ruined everything", "this happened because of me",
             "i am responsible for this", "i should have done better",
             "i always mess things up",
-            "i am to blame", "it’s my mistake",
-            "i shouldn’t have done that", "i failed everyone",
+            "i am to blame", "it’s my mistake", "its my mistake",
+            "i shouldn’t have done that", "i shouldnt have done that", "i failed everyone",
             "i let everyone down", "i am the problem",
             "i could have prevented this", "this is on me",
             "i take the blame", "i did everything wrong"
@@ -54,15 +54,15 @@ def detect_cbt_patterns(text):
 
     "Assuming others think badly": {
         "keywords": [
-            "they hate me", "everyone hates me", "they think i'm stupid",
+            "they hate me", "everyone hates me", "they think i'm stupid", "they think im stupid",
             "they think badly of me", "people are judging me",
             "they are judging me", "no one likes me",
-            "people don't like me", "they are talking about me",
-            "they think i'm useless", "everyone is against me",
-            "they must think i’m weird", "they are laughing at me",
-            "people are criticizing me", "they think i’m a failure",
-            "others see me as weak", "they don’t respect me",
-            "they are ignoring me", "they don’t care about me",
+            "people don't like me", "people dont like me", "they are talking about me",
+            "they think i'm useless", "they think im useless", "everyone is against me",
+            "they must think i’m weird", "they must think im weird", "they are laughing at me",
+            "people are criticizing me", "they think i’m a failure", "they think im a failure",
+            "others see me as weak", "they don’t respect me", "they dont respect me",
+            "they are ignoring me", "they don’t care about me", "they dont care about me",
             "everyone is watching me", "they are disappointed in me"
         ],
         "description": "You assume what others think without evidence."
