@@ -48,11 +48,14 @@ The system combines **Natural Language Processing (NLP)** and **Machine Learning
   * 🟡 Medium
   * 🔴 High
 
-### 📅 Interactive UI
-
-* Built with Streamlit
-* Sidebar calendar for tracking entries
-* Displays past entries with risk levels
+## 🖥️ Interactive UI
+Built with Streamlit
+Sidebar date selection
+Displays:
+Past entries
+Sentiment
+CBT patterns
+Risk level
 
 ---
 
@@ -101,7 +104,10 @@ MindShield/
 │   └── model.py
 │
 ├── data/
+│ └── dataset.csv
+│
 ├── models/
+│ └── model.pkl
 │
 ├── README.md
 ├── LICENSE
