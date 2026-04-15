@@ -3,6 +3,8 @@ import datetime
 from modules.preprocessing import preprocess
 from modules.sentiment import get_sentiment
 from modules.distortion import detect_cbt_patterns
+from modules.model import predict_risk
+
 st.set_page_config(layout="wide")
 
 # ---------------- SIDEBAR ----------------
@@ -67,20 +69,72 @@ if st.button("Save Entry"):
         sentiment, score = get_sentiment(text)
         cbt_patterns = detect_cbt_patterns(clean)
         cbt_score = len(cbt_patterns)
+        features = [score, cbt_score]
+        risk_num = predict_risk(features)
+        mapping = {0: "Low", 1: "Medium", 2: "High"}
+        risk = mapping[risk_num]
         #ML (FUTURE)
         # 👉 Replace this later with:
         # from modules.model import predict_risk
         # risk = predict_risk([score, cbt_score])
-        risk = "Coming Soon"   # placeholder for now
+       
 
         st.session_state.history[selected_date] = {
             "text": text,
             "risk": risk
         }
+        # 🔥 CHECK LAST 2 DAYS HIGH RISK
+        dates = sorted(st.session_state.history.keys())
+
+        if len(dates) >= 2:
+            last_date = dates[-1]
+            prev_date = dates[-2]
+
+            last_risk = st.session_state.history[last_date]["risk"]
+            prev_risk = st.session_state.history[prev_date]["risk"]
+
+            if last_risk == "High" and prev_risk == "High":
+                st.markdown("""
+                    <style>
+                    @keyframes slideDownFade {
+                        from { top: -50px; opacity: 0; }
+                        to { top: 30px; opacity: 1; }
+                    }
+                    .custom-risk-alert {
+                        position: fixed;
+                        top: 30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: rgba(255, 75, 75, 0.95);
+                        backdrop-filter: blur(10px);
+                        -webkit-backdrop-filter: blur(10px);
+                        color: white !important;
+                        padding: 18px 30px;
+                        border-radius: 16px;
+                        font-weight: 600;
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 16px;
+                        z-index: 999999;
+                        box-shadow: 0 8px 32px rgba(255, 75, 75, 0.4);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        animation: slideDownFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    }
+                    .custom-risk-alert span:nth-child(1) {
+                        font-size: 24px;
+                    }
+                    </style>
+                    <div class="custom-risk-alert">
+                        <span>⚠️</span>
+                        <span>High risk detected for consecutive days. Please consider contacting a doctor.</span>
+                    </div>
+                """, unsafe_allow_html=True)
 
         st.success("✅ Entry saved!")
 
-         # 🔥 SENTIMENT
+        # 🔥 SENTIMENT
         st.markdown("### 😊 Sentiment")
         if sentiment == "Positive":
             st.success(f"Positive ({score:.2f})")
@@ -98,9 +152,13 @@ if st.button("Save Entry"):
         else:
             st.success("Healthy thinking detected")
 
-        # 🔥 RISK (ML PLACEHOLDER)
-        st.markdown("### ⚠️ Relapse Risk")
-        st.info("ML model will predict: Low / Medium / High")
+        st.markdown("### ⚠️ Risk Level")
+        if risk == "High":
+            st.error("🔴 High Risk")
+        elif risk == "Medium":
+            st.warning("🟡 Medium Risk")
+        else:
+            st.success("🟢 Low Risk")
 
 
 # ---------------- MAIN DISPLAY ----------------
