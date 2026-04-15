@@ -68,7 +68,7 @@ if st.button("Save Entry"):
         clean = preprocess(text)
         sentiment, score = get_sentiment(text)
         cbt_patterns = detect_cbt_patterns(clean)
-        cbt_score = len(cbt_patterns)
+        cbt_score = sum(item.get("matches",0) for item in cbt_patterns)
         features = [score, cbt_score]
         risk_num = predict_risk(features)
         mapping = {0: "Low", 1: "Medium", 2: "High"}
@@ -145,7 +145,7 @@ if st.button("Save Entry"):
 
         # 🔥 CBT PATTERNS
         st.markdown("### 🧠 Thinking Patterns")
-        if cbt_patterns:
+        if cbt_patterns[0]["pattern"] != "Healthy thinking":
             for item in cbt_patterns:
                 st.warning(f"{item['pattern']}")
                 st.caption(item['description'])

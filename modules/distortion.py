@@ -12,7 +12,9 @@ def detect_cbt_patterns(text):
             "nothing ever improves", "i always get it wrong",
             "it always ends badly", "i never do anything right",
             "i keep failing", "same thing happens every time",
-            "nothing changes", "i am stuck like this forever"
+            "nothing changes", "i am stuck like this forever",
+            "nobody loves me","i feel unloved","i feel hated",
+            "no one cares about me",  
         ],
         "description": "You feel like bad situations happen all the time."
     },
@@ -87,13 +89,21 @@ def detect_cbt_patterns(text):
     detected = []
 
     for name, data in patterns.items():
+        matched_keywords = set()
+
         for keyword in data["keywords"]:
-            if keyword in text:
-                detected.append({
-                    "pattern": name,
-                    "description": data["description"]
-                })
-                break
+            if keyword in text or all(word in text for word in keyword.split()):
+                matched_keywords.add(keyword)
+
+        match_count = len(matched_keywords)
+
+        # if ANY keyword matched → include pattern
+        if match_count > 0:
+            detected.append({
+                "pattern": name,
+                "description": data["description"],
+                "matches": match_count   
+            })
 
     if detected:
         return detected
