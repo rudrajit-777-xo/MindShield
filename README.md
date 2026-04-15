@@ -111,6 +111,7 @@ MindShield/
 │
 ├── README.md
 ├── LICENSE
+├── requirements.txt
 ```
 
 ---
