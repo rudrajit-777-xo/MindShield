@@ -3,7 +3,7 @@ import nltk #lib for text preprocessing and tokenization and stopwords
 from nltk.tokenize import word_tokenize #function to split sentence into words
 from nltk.corpus import stopwords #list of common useless words
 
-stopword = set(stopwords.words('english'))
+stopword = set(stopwords.words('english')) - {"no", "not", "never"}
 def preprocess(text):
     text = text.lower()
     text = re.sub(r'[^a-z\s]', '', text)
