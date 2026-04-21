@@ -3,6 +3,15 @@ import nltk #lib for text preprocessing and tokenization and stopwords
 from nltk.tokenize import word_tokenize #function to split sentence into words
 from nltk.corpus import stopwords #list of common useless words
 
+import os
+# Download required NLTK data at module start
+try:
+    nltk.download('punkt', quiet=True)
+    nltk.download('punkt_tab', quiet=True)
+    nltk.download('stopwords', quiet=True)
+except Exception:
+    pass
+
 stopword = set(stopwords.words('english')) - {"no", "not", "never"}
 def preprocess(text):
     text = text.lower()
