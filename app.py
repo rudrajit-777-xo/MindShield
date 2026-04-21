@@ -8,7 +8,7 @@ from modules.model import predict_risk
 st.set_page_config(layout="wide")
 
 # ---------------- SIDEBAR ----------------
-st.sidebar.title("📅 Select Date")
+st.sidebar.title("Select Date")
 
 selected_date = st.sidebar.date_input("Choose a date", datetime.date.today())
 
@@ -17,12 +17,12 @@ if "history" not in st.session_state:
     st.session_state.history = {}
 
 # Sidebar display
-st.sidebar.subheader("📜 Entry Details")
+st.sidebar.subheader(" Entry Details")
 
 if selected_date in st.session_state.history:
     entry = st.session_state.history[selected_date]
 
-    st.sidebar.write("📝", entry["text"])
+    st.sidebar.write("", entry["text"])
 
     # Risk display with color
     risk = entry["risk"]
